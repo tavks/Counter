@@ -7,20 +7,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var minusButton: UIButton!
-    @IBOutlet weak var plusButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var historyTextView: UITextView!
+final class ViewController: UIViewController {
+    @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private weak var minusButton: UIButton!
+    @IBOutlet private weak var plusButton: UIButton!
+    @IBOutlet private weak var resetButton: UIButton!
+    @IBOutlet private weak var historyTextView: UITextView!
     
-    var counter: Int = 0 {
+    private var counter: Int = 0 {
         didSet {
             counterLabel.text = "\(counter)"
         }
     }
     
-    var currentTimestamp: String {
+    private var currentTimestamp: String {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -28,12 +28,12 @@ class ViewController: UIViewController {
         return formatter.string(from: date)
     }
     
-    //This function scolls the text view content to bottom, so the text view shows the most recent history after user interacts with the buttons
+    //This function scrolls the text view content to bottom, so the text view shows the most recent history after user interacts with the buttons
     private func scrollTextViewToBottom() {
         historyTextView.scrollRangeToVisible(NSRange(location: historyTextView.text.count - 1, length: 1))
     }
     
-    @IBAction func minusButtonDidTap(_ sender: Any) {
+    @IBAction private func minusButtonDidTap(_ sender: Any) {
         if counter == 0 {
             historyTextView.text += "\n\(currentTimestamp): попытка уменьшить значение счётчика ниже 0"
             scrollTextViewToBottom()
@@ -44,13 +44,13 @@ class ViewController: UIViewController {
         scrollTextViewToBottom()
     }
     
-    @IBAction func plusButtonDidTap(_ sender: Any) {
+    @IBAction private func plusButtonDidTap(_ sender: Any) {
         counter += 1
         historyTextView.text += "\n\(currentTimestamp): значение изменено на +1"
         scrollTextViewToBottom()
     }
     
-    @IBAction func resetButtonDidTap(_ sender: Any) {
+    @IBAction private func resetButtonDidTap(_ sender: Any) {
         counter = 0
         historyTextView.text += "\n\(currentTimestamp): значение сброшено"
         scrollTextViewToBottom()
